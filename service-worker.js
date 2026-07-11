@@ -1,4 +1,4 @@
-const CACHE_NAME = "bluetape-v1";
+const CACHE_NAME = "bluetape-v2";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -27,19 +27,35 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
-  // Never intercept cross-origin requests (Google Fonts, Anthropic API) — let the network handle those directly.
   if (url.origin !== self.location.origin) return;
 
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
+  const isAppCode =
+    event.request.mode === "navigate" ||
+    url.pathname.endsWith("index.html") ||
+    url.pathname.endsWith("bundle.js") ||
+    url.pathname.endsWith("/");
+
+  if (isAppCode) {
+    event.respondWith(
+      fetch(event.request)
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
           return response;
         })
-        .catch(() => caches.match("./index.html"));
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html")))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      });
     })
   );
 });

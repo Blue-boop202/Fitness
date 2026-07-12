@@ -1,6 +1,6 @@
 {
-  "name": "BlueTape Fitness",
-  "short_name": "BlueTape",
+  "name": "Fitness202",
+  "short_name": "Fitness202",
   "description": "Home training, running, nutrition, and AI coaching for body recomposition with a backpack, a chair, and running shoes.",
   "start_url": "./index.html",
   "scope": "./",

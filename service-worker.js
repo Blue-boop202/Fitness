@@ -1,4 +1,4 @@
-const CACHE_NAME = "bluetape-v3";
+const CACHE_NAME = "fitness202-v4";
 const APP_SHELL = [
   "./",
   "./index.html",

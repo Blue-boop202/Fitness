@@ -1,8 +1,9 @@
-const CACHE_NAME = "bluetape-v2";
+const CACHE_NAME = "bluetape-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./bundle.js",
+  "./styles.css",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -33,6 +34,7 @@ self.addEventListener("fetch", (event) => {
     event.request.mode === "navigate" ||
     url.pathname.endsWith("index.html") ||
     url.pathname.endsWith("bundle.js") ||
+    url.pathname.endsWith("styles.css") ||
     url.pathname.endsWith("/");
 
   if (isAppCode) {

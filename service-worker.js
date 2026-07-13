@@ -1,4 +1,4 @@
-const CACHE_NAME = "fitness202-v4";
+const CACHE_NAME = "fitness202-v5";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -35,6 +35,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.endsWith("index.html") ||
     url.pathname.endsWith("bundle.js") ||
     url.pathname.endsWith("styles.css") ||
+    url.pathname.endsWith("manifest.json") ||
     url.pathname.endsWith("/");
 
   if (isAppCode) {

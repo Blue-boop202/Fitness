@@ -1,4 +1,4 @@
-const CACHE_NAME = "fitness202-v6";
+const CACHE_NAME = "fitness202-v8";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -40,7 +40,7 @@ self.addEventListener("fetch", (event) => {
 
   if (isAppCode) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: "reload" })
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));

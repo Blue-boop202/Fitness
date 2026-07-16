@@ -1,4 +1,4 @@
-const CACHE_NAME = "fitness202-v9";
+const CACHE_NAME = "fitness202-v12";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -59,6 +59,16 @@ self.addEventListener("fetch", (event) => {
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return response;
       });
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientsArr) => {
+      if (clientsArr.length > 0) return clientsArr[0].focus();
+      return self.clients.openWindow("./index.html");
     })
   );
 });
